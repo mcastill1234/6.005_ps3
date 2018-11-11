@@ -3,6 +3,7 @@
  */
 package expressivo;
 
+
 /**
  * An immutable data type representing a polynomial expression of:
  *   + and *
@@ -16,9 +17,12 @@ package expressivo;
  */
 public interface Expression {
     
-    // Datatype definition
-    //   TODO
-    
+    // Data type definition (abbreviated PolyExpr)
+    //
+    // PolyExpr = Number(n: int) + Variable(s: String)
+    //          + Plus(left: PolyExpr, right: PolyExpr)
+    //          + Multiply(left: PolyExpr, right: PolyExpr)
+
     /**
      * Parse an expression.
      * @param input expression to parse, as defined in the PS3 handout.
@@ -53,5 +57,21 @@ public interface Expression {
     public int hashCode();
     
     // TODO more instance methods
+
+    public static Expression make(double num) {
+        return new Number(num);
+    }
+
+    public static Expression make(String var) {
+        return new Variable(var);
+    }
+
+    public static Expression sum(Expression e1, Expression e2) {
+        return new Plus(e1, e2);
+    }
+
+    public static Expression times(Expression e1, Expression e2) {
+        return new Multiply(e1, e2);
+    }
     
 }
