@@ -19,6 +19,24 @@ public class Multiply implements Expression {
 
     @Override
     public String toString() {
-        return e1.toString() + "*" + e2.toString();
+      return "(" +  e1.toString() + " * " + e2.toString() + ")";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Multiply)) {
+            return false;
+        }
+        Multiply that = (Multiply)obj;
+        return this.e1.equals(that.e1) && this.e2.equals(that.e2);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31*result + e1.hashCode();
+        result = 31*result + e2.hashCode();
+        return result;
     }
 }

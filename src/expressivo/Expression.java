@@ -6,8 +6,7 @@ package expressivo;
 
 /**
  * An immutable data type representing a polynomial expression of:
- *   + and *
- *   nonnegative integers and floating-point numbers
+ *   + and * nonnegative integers and floating-point numbers
  *   variables (case-sensitive nonempty strings of letters)
  * 
  * <p>PS3 instructions: this is a required ADT interface.
@@ -58,18 +57,39 @@ public interface Expression {
     
     // TODO more instance methods
 
+    /**
+     * Creates a Number expression with Double format
+     * @param num number to be represented as expression, requires num >= 0
+     * @return Number expression
+     */
     public static Expression make(double num) {
         return new Number(num);
     }
 
-    public static Expression make(String var) {
-        return new Variable(var);
-    }
+    /**
+     * Creates a Variable expression with String format
+     * @param var variable to be represented as expression, requires var only contains chars a-z, A-Z
+     * @return Variable expression
+     */
+    // Factory method: Creator for Variable
+    public static Expression make(String var) { return new Variable(var); }
 
+    /**
+     * Creates a Plus expression of two sub-expressions
+     * @param e1 left side expression
+     * @param e2 right side expression
+     * @return Plus Expression e1 + e2
+     */
     public static Expression sum(Expression e1, Expression e2) {
         return new Plus(e1, e2);
     }
 
+    /**
+     * Creates a Multiply expression of two sub-expressions
+     * @param e1 left side expression
+     * @param e2 right sie expression
+     * @return Multiply expression e1 * e2
+     */
     public static Expression times(Expression e1, Expression e2) {
         return new Multiply(e1, e2);
     }
