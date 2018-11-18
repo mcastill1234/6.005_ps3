@@ -8,13 +8,19 @@ public class Multiply implements Expression {
     // Abstraction function:
     //      represents the product of two expressions e1 and e2
     // Rep invariant:
-    //      true
+    //      expressions e1 and e2 are non-null and immutable
     // Safe from Rep:
     //      all fields are immutable and final
+
+    private void checkRep() {
+        assert e1 != null;
+        assert e2 != null;
+    }
 
     public Multiply(Expression e1, Expression e2) {
         this.e1 = e1;
         this.e2 = e2;
+        checkRep();
     }
 
     @Override

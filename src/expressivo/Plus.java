@@ -7,13 +7,19 @@ public class Plus implements Expression {
     // Abstraction function:
     //      represents the sum of two expressions e1 and e2
     // Rep invariant:
-    //      true
+    //      expressions e1 and e2 are non-null and immutable
     // Safe from Rep:
-    //      all fields are immutable and final
+    //      all fields are private final and immutable
+
+    private void checkRep() {
+        assert e1 != null;
+        assert e2 != null;
+    }
 
     public Plus(Expression e1, Expression e2) {
         this.e1 = e1;
         this.e2 = e2;
+        checkRep();
     }
 
     @Override

@@ -4,11 +4,11 @@ public class Number implements Expression {
     private final double n;
 
     // Abstraction function:
-    //      represents the positive number n
+    //      represents the nonnegative number n
     // Rep invariant:
-    //      num >= 0
+    //      0 <= num <= Double.MAX_VALUE
     // Safe from Rep:
-    //      all fields are immutable and final
+    //      all fields are private final and immutable
 
     private void checkRep() {
         assert n >= 0;

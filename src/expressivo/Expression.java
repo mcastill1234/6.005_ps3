@@ -3,6 +3,15 @@
  */
 package expressivo;
 
+import expressivo.parser.ExpressionLexer;
+import expressivo.parser.ExpressionParser;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
  * An immutable data type representing a polynomial expression of:
@@ -16,11 +25,11 @@ package expressivo;
  */
 public interface Expression {
     
-    // Data type definition (abbreviated PolyExpr)
+    // Data type definition (abbreviated Expr)
     //
-    // PolyExpr = Number(n: int) + Variable(s: String)
-    //          + Plus(left: PolyExpr, right: PolyExpr)
-    //          + Multiply(left: PolyExpr, right: PolyExpr)
+    // Expr = Number(num: int) + Variable(var: String)
+    //      + Plus(e1: Expr, e2: Expr)
+    //      + Multiply(e1: Expr, e2: Expr)
 
     /**
      * Parse an expression.
@@ -29,7 +38,25 @@ public interface Expression {
      * @throws IllegalArgumentException if the expression is invalid
      */
     public static Expression parse(String input) {
-        throw new RuntimeException("unimplemented");
+        try {
+            CharStream stream = new ANTLRInputStream(input);
+            ExpressionLexer lexer = new ExpressionLexer(stream);
+            lexer.reportErrorsAsExceptions();
+
+            TokenStream tokens = new CommonTokenStream(lexer);
+            ExpressionParser parser = new ExpressionParser(tokens);
+            parser.reportErrorsAsExceptions();
+
+            ParseTree tree = parser.root();
+            MakePolyExpression expr = new MakePolyExpression();
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(expr, tree);
+            return expr.getExpression();
+        }
+        catch (ParseCancellationException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
     }
     
     /**
@@ -71,7 +98,6 @@ public interface Expression {
      * @param var variable to be represented as expression, requires var only contains chars a-z, A-Z
      * @return Variable expression
      */
-    // Factory method: Creator for Variable
     public static Expression make(String var) { return new Variable(var); }
 
     /**
@@ -93,5 +119,5 @@ public interface Expression {
     public static Expression times(Expression e1, Expression e2) {
         return new Multiply(e1, e2);
     }
-    
+
 }

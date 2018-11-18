@@ -14,7 +14,7 @@ public class ExpressionTest {
 
     // Testing strategy
     //      - Test toString, equals and hashCode for all types of expressions
-    //      - Test other methods
+    //      - Test parse method with different input strings
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -221,5 +221,48 @@ public class ExpressionTest {
         Expression mult1 = Expression.times(num1, var1);
         Expression sameMult = Expression.times(num1, var1);
         assertEquals(mult1.hashCode(), sameMult.hashCode());
+    }
+
+    /**
+     * Tests for parse method
+     *      - Test Number, Variable, Plus and Multiply expressions
+     *      - Test combined Plus and Multiply expressions
+     */
+
+    // Covers Number parsing
+    @Test public void testParseNumber() {
+        String testNum = "6.28";
+        Expression numberExp = Expression.parse(testNum);
+        assertEquals(testNum, numberExp.toString());
+    }
+
+    // Covers Variable parsing
+    @Test public void testParseVariable() {
+        String testVar = "anyVar";
+        Expression variableExp = Expression.parse(testVar);
+        assertEquals(testVar, variableExp.toString());
+    }
+
+    // Covers Plus parsing
+    @Test public void testParsePlus() {
+        String testSum = "6.25 + 28.29";
+        String expectedSum = "(6.25 + 28.29)";
+        Expression plusExp = Expression.parse(testSum);
+        assertEquals(expectedSum, plusExp.toString());
+    }
+
+    // Covers Multiply parsing
+    @Test public void testParseMultiply() {
+        String testMult = "6.25 * 0.253";
+        String expectedMult = "(6.25 * 0.253)";
+        Expression multExp = Expression.parse(testMult);
+        assertEquals(expectedMult, multExp.toString());
+    }
+
+    // Covers combined expression
+    @Test public void testParseCombinedExp() {
+        String testExp = "((19.2 + a) + (a * (19.2 + a)))";
+        Expression combinedExp = Expression.parse(testExp);
+        assertEquals(testExp, combinedExp.toString());
     }
 }

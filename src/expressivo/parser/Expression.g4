@@ -38,12 +38,13 @@ expr:   expr '*' expr   # Mult
     |   '(' expr ')'    # Grp
     ;
 
-NUM :   DIGIT+ '.' DIGIT*   // match 1. 39. 3.14159 etc
+NUM :   DIGIT+ '.' DIGIT+   // match 1. 39. 3.14159 etc
     |   '0.' DIGIT+         // match 0.1 0.14159 etc
+    |   DIGIT+              // match integer digits 1, 23, 45 etc
     ;
 
 DIGIT : [0-9];
-VAR : [a-z]+;
+VAR : [a-zA-Z]+;
 
 /* Tell Antlr to ignore spaces around tokens. */
 SPACES : [ ]+ -> skip;

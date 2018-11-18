@@ -8,7 +8,7 @@ public class Variable implements Expression {
     // Rep invariant
     //    var contains only a-zA-Z
     // Safety from rep exposure
-    //    all fields are immutable and final
+    //    all fields are private final and immutable
 
     private void checkRep() {
         assert var.matches("[a-zA-Z]+");
