@@ -39,4 +39,8 @@ public class Number implements Expression {
         return 31*result + (int)(c^(c>>>32));
     }
 
+    @Override
+    public Expression differentiate(Expression exp) {
+        return new Number(0);
+    }
 }

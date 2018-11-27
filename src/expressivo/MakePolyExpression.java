@@ -23,7 +23,7 @@ public class MakePolyExpression extends ExpressionBaseListener {
         // matched the Mult alternative
         Expression e2 = stack.pop();
         Expression e1 = stack.pop();
-        Expression product = new Multiply(e1, e2);
+        Expression product = Expression.times(e1, e2);
         stack.push(product);
     }
 
@@ -32,7 +32,7 @@ public class MakePolyExpression extends ExpressionBaseListener {
         // matched the Plus alternative
         Expression e2 = stack.pop();
         Expression e1 = stack.pop();
-        Expression sum = new Plus(e1, e2);
+        Expression sum = Expression.sum(e1, e2);
         stack.push(sum);
     }
 

@@ -16,6 +16,7 @@ public class Plus implements Expression {
         assert e2 != null;
     }
 
+    /** Make a Plus which is the sum of e1 and e2 expressions */
     public Plus(Expression e1, Expression e2) {
         this.e1 = e1;
         this.e2 = e2;
@@ -42,5 +43,10 @@ public class Plus implements Expression {
         result = 31*result + e1.hashCode();
         result = 31*result + e2.hashCode();
         return result;
+    }
+
+    @Override
+    public Expression differentiate(Expression exp) {
+        return Expression.sum(e1.differentiate(exp), e2.differentiate(exp));
     }
 }

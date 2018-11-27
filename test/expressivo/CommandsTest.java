@@ -5,6 +5,7 @@ package expressivo;
 
 import static org.junit.Assert.*;
 
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Test;
 
 /**
@@ -22,5 +23,12 @@ public class CommandsTest {
     
     
     // TODO tests for Commands.differentiate() and Commands.simplify()
+
+    @Test public void testCommandDifferentiateMethod() {
+        String testExp = "x * x * x";
+        String diffTestExp = Commands.differentiate(testExp, "x");
+        String expected = "((x * x) + (x * (x + x)))";
+        assertEquals(expected, diffTestExp);
+    }
     
 }

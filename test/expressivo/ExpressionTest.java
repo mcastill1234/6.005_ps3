@@ -15,6 +15,7 @@ public class ExpressionTest {
     // Testing strategy
     //      - Test toString, equals and hashCode for all types of expressions
     //      - Test parse method with different input strings
+    //      - Test differentiate method for all types of expressions
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -23,6 +24,8 @@ public class ExpressionTest {
     
     
     // TODO tests for Expression
+
+    // Use this test for random testing
     @Test
     public void testDummyMethod() {
         double num1 = 5.43;
@@ -265,4 +268,46 @@ public class ExpressionTest {
         Expression combinedExp = Expression.parse(testExp);
         assertEquals(testExp, combinedExp.toString());
     }
+
+    /**
+     * Tests for differentiate method
+     *      - Test differentiate a Number, Variable, Plus and Multiply expression
+     */
+
+    // Covers Number differentiation
+    @Test public void testDifferentiateNumber() {
+        Expression testNum = Expression.make(6.28);
+        Expression anyVar = Expression.make("anyVar");
+        Expression diffNum = testNum.differentiate(anyVar);
+        assertEquals("0.0", diffNum.toString());
+    }
+
+    // Covers Variable differentiation
+    @Test public void testDifferentiateVariable() {
+        Expression testVar1 = Expression.make("var");
+        Expression testVar2 = Expression.make("anyVar");
+        Expression diffVar1 = testVar1.differentiate(testVar1);
+        Expression diffVar2 = testVar1.differentiate(testVar2);
+        assertEquals("1.0", diffVar1.toString());
+        assertEquals("0.0", diffVar2.toString());
+    }
+
+    // Covers Sum differentiation
+    @Test public void testDifferentiateSum() {
+        String sumExp = "23.5 + spin";
+        Expression plusExp = Expression.parse(sumExp);
+        Expression diffVar = new Variable("spin");
+        Expression diffPlusExp = plusExp.differentiate(diffVar);
+        assertEquals("1.0", diffPlusExp.toString());
+    }
+
+    // Covers Multiply differentiation
+    @Test public void testDifferentiateMultiply() {
+        String testExp = "spin * momentum";
+        Expression multExp = Expression.parse(testExp);
+        Expression diffVar = new Variable("spin");
+        Expression diffMultExp = multExp.differentiate(diffVar);
+        assertEquals("momentum", diffMultExp.toString());
+    }
+
 }

@@ -13,6 +13,8 @@ public class Variable implements Expression {
     private void checkRep() {
         assert var.matches("[a-zA-Z]+");
     }
+
+    /** Make a Variable */
     public Variable(String var) {
         this.var = var;
         checkRep();
@@ -37,5 +39,14 @@ public class Variable implements Expression {
         int result = 17;
         int c = var.hashCode();
         return 31*result + c;
+    }
+
+    @Override
+    public Expression differentiate(Expression exp) {
+        if (this.equals(exp)) {
+            return new Number(1);
+        } else {
+            return new Number(0);
+        }
     }
 }

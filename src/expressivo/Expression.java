@@ -101,23 +101,51 @@ public interface Expression {
     public static Expression make(String var) { return new Variable(var); }
 
     /**
-     * Creates a Plus expression of two sub-expressions
+     * Creates a Plus expression of two sub-expressions. Strips unnecessary zeroes.
      * @param e1 left side expression
      * @param e2 right side expression
      * @return Plus Expression e1 + e2
      */
     public static Expression sum(Expression e1, Expression e2) {
+        Number zero = new Number(0);
+        if (e1.equals(zero)) {
+            return e2;
+        }
+        if (e2.equals(zero)) {
+            return e1;
+        }
         return new Plus(e1, e2);
     }
 
     /**
-     * Creates a Multiply expression of two sub-expressions
+     * Creates a Multiply expression of two sub-expressions. Strips unnecessary ones and zeroes.
      * @param e1 left side expression
      * @param e2 right sie expression
      * @return Multiply expression e1 * e2
      */
     public static Expression times(Expression e1, Expression e2) {
+        Number zero = new Number(0);
+        Number one = new Number(1);
+        if (e1.equals(zero) || e2.equals(zero)) {
+            return new Number(0);
+        }
+        if (e1.equals(one)) {
+            return e2;
+        }
+        if (e2.equals(one)) {
+            return e1;
+        }
         return new Multiply(e1, e2);
     }
+
+    /**
+     * Differentiates this expression with respect to variable exp.
+     * Requires variable to be expressed as an Expression object, not a string.
+     * @param exp the expression for the variable to differentiate by
+     * @return Differentiated expression with respect to variable exp
+     */
+    public Expression differentiate(Expression exp);
+
+
 
 }

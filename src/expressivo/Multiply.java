@@ -17,6 +17,7 @@ public class Multiply implements Expression {
         assert e2 != null;
     }
 
+    /** Make a Multiply which is the sum of e1 and e2 expressions */
     public Multiply(Expression e1, Expression e2) {
         this.e1 = e1;
         this.e2 = e2;
@@ -44,5 +45,12 @@ public class Multiply implements Expression {
         result = 31*result + e1.hashCode();
         result = 31*result + e2.hashCode();
         return result;
+    }
+
+    @Override
+    public Expression differentiate(Expression exp) {
+        Expression leftDiff = Expression.times(e1, e2.differentiate(exp));
+        Expression rightDiff = Expression.times(e2, e1.differentiate(exp));
+        return Expression.sum(leftDiff, rightDiff);
     }
 }
