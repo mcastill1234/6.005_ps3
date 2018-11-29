@@ -3,6 +3,8 @@
  */
 package expressivo;
 
+import java.util.HashMap;
+import java.util.Map;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
@@ -16,6 +18,7 @@ public class ExpressionTest {
     //      - Test toString, equals and hashCode for all types of expressions
     //      - Test parse method with different input strings
     //      - Test differentiate method for all types of expressions
+    //      - Test evaluate method for all types of expressions
     
     @Test(expected=AssertionError.class)
     public void testAssertionsEnabled() {
@@ -310,4 +313,69 @@ public class ExpressionTest {
         assertEquals("momentum", diffMultExp.toString());
     }
 
+    /**
+     * Tests for evaluate method
+     *      - Test evaluate on Number, Variable, Plus and Multiply expressions
+     */
+
+    // Covers Number evaluation
+    @Test public void testEvaluateNumber() {
+        Expression testNum = Expression.make(6.051);
+        Map<String, Double> environment = new HashMap<>();
+        environment.put("x", 5.00);
+        environment.put("y", 10.00);
+        environment.put("z", 20.00);
+        Expression evalNum = testNum.evaluate(environment);
+        assertEquals(testNum, evalNum);
+    }
+
+    // Covers Variable evaluation
+    @Test public void testEvaluateVariable() {
+        Expression testVar = Expression.make("x");
+        Map<String, Double> environment = new HashMap<>();
+        environment.put("x", 5.00);
+        environment.put("y", 10.00);
+        environment.put("z", 20.00);
+        Expression evalVar = testVar.evaluate(environment);
+        Expression expectedExp = Expression.make(5.00);
+        assertEquals(evalVar, expectedExp);
+    }
+
+    // Covers Sum Expression
+    @Test public void testEvaluateSums() {
+        Expression var1 = Expression.make("x");
+        Expression var2 = Expression.make("y");
+        Expression var3 = Expression.make("z");
+        Map<String, Double> environment = new HashMap<>();
+        environment.put("x", 5.00);
+        environment.put("y", 10.00);
+        environment.put("z", 20.00);
+        Expression testSum1 = Expression.sum(var1, var2);
+        Expression testSum2 = Expression.sum(var2, var3);
+        Expression evalSum1 = testSum1.evaluate(environment);
+        Expression evalSum2 = testSum2.evaluate(environment);
+        Expression expectedExp1 = Expression.sum(Expression.make(5.00), Expression.make(10.00));
+        Expression expectedExp2 = Expression.sum(Expression.make(10.00), Expression.make(20.00));
+        assertEquals(evalSum1, expectedExp1);
+        assertEquals(evalSum2, expectedExp2);
+    }
+
+    // Covers Multiply Expression
+    @Test public void testEvaluateMultiplies() {
+        Expression var1 = Expression.make("x");
+        Expression var2 = Expression.make("y");
+        Expression var3 = Expression.make("z");
+        Map<String, Double> environment = new HashMap<>();
+        environment.put("x", 5.00);
+        environment.put("y", 10.00);
+        environment.put("z", 20.00);
+        Expression testMult1 = Expression.times(var1, var2);
+        Expression testMult2 = Expression.times(var2, var3);
+        Expression evalMult1 = testMult1.evaluate(environment);
+        Expression evalMult2 = testMult2.evaluate(environment);
+        Expression expectedExp1 = Expression.times(Expression.make(5.00), Expression.make(10.00));
+        Expression expectedExp2 = Expression.times(Expression.make(10.00), Expression.make(20.00));
+        assertEquals(evalMult1, expectedExp1);
+        assertEquals(evalMult2, expectedExp2);
+    }
 }

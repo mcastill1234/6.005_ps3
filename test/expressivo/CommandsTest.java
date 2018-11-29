@@ -5,7 +5,8 @@ package expressivo;
 
 import static org.junit.Assert.*;
 
-import org.antlr.v4.runtime.CommonTokenStream;
+import java.util.Map;
+import java.util.HashMap;
 import org.junit.Test;
 
 /**
@@ -29,6 +30,17 @@ public class CommandsTest {
         String diffTestExp = Commands.differentiate(testExp, "x");
         String expected = "((x * x) + (x * (x + x)))";
         assertEquals(expected, diffTestExp);
+    }
+
+    @Test public void testCommandSimplifyMethod() {
+        String testExp = "x*x*x + y*y*y";
+        Map<String, Double> environment = new HashMap<>();
+        // environment.put("x", 5.00);
+        environment.put("y", 10.00);
+        // environment.put("z", 20.00);
+        String simplified = Commands.simplify(testExp, environment);
+        String expected = "(((x * x) * x) + ((10.0 * 10.0) * 10.0))";
+        assertEquals(expected, simplified);
     }
     
 }

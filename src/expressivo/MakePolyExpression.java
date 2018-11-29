@@ -3,6 +3,7 @@ package expressivo;
 import java.util.Stack;
 
 import expressivo.parser.*;
+import jdk.jfr.Experimental;
 
 /** Make an Expression value from a parse tree. */
 public class MakePolyExpression extends ExpressionBaseListener {
@@ -41,7 +42,7 @@ public class MakePolyExpression extends ExpressionBaseListener {
         if (ctx.NUM() != null){
             // matched the Num alternative
             double n = Double.valueOf(ctx.NUM().getText());
-            Expression number = new Number(n);
+            Expression number = Expression.make(n);
             stack.push(number);
         } else {
             // matched a different alternative. Do nothing.
@@ -50,7 +51,7 @@ public class MakePolyExpression extends ExpressionBaseListener {
 
     @Override public void exitVar(ExpressionParser.VarContext ctx) {
         if (ctx.VAR() != null) {
-            Expression variable = new Variable(ctx.getText());
+            Expression variable = Expression.make(ctx.getText());
             stack.push(variable);
         } else {
             // matched a different alternative. Do nothing.

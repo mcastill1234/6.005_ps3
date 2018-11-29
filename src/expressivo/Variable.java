@@ -1,5 +1,7 @@
 package expressivo;
 
+import java.util.Map;
+
 public class Variable implements Expression {
     private final String var;
 
@@ -44,9 +46,24 @@ public class Variable implements Expression {
     @Override
     public Expression differentiate(Expression exp) {
         if (this.equals(exp)) {
-            return new Number(1);
+            return Expression.make(1);
         } else {
-            return new Number(0);
+            return Expression.make(0);
         }
     }
+
+    @Override
+    public Expression evaluate(Map<String, Double> environment) {
+        if (environment.containsKey(var)) {
+            return Expression.make(environment.get(var));
+        } else {
+            return this;
+        }
+    }
+
+    @Override
+    public boolean isNumeric() {
+        return false;
+    }
+
 }

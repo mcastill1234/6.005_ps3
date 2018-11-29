@@ -3,6 +3,8 @@
  */
 package expressivo;
 
+import java.util.Map;
+
 import expressivo.parser.ExpressionLexer;
 import expressivo.parser.ExpressionParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -146,6 +148,20 @@ public interface Expression {
      */
     public Expression differentiate(Expression exp);
 
+    /**
+     * Evaluates this expression with variables specified in an environment.
+     * @param environment maps variables to values.  Variables are required to be case-sensitive nonempty
+     *         strings of letters.  The set of variables in environment is allowed to be different than the
+     *         set of variables actually found in expression.  Values must be nonnegative numbers.
+     * @return An expression substituting variables found in the environment for their respective values.
+     */
+    public Expression evaluate(Map<String,Double> environment);
 
+
+    /**
+     * Determines if this expression contains numbers only or not.
+     * @return true if this expression is numeric, false otherwise.
+     */
+    public boolean isNumeric();
 
 }

@@ -1,5 +1,7 @@
 package expressivo;
 
+import java.util.Map;
+
 public class Plus implements Expression {
     private final Expression e1;
     private final Expression e2;
@@ -48,5 +50,15 @@ public class Plus implements Expression {
     @Override
     public Expression differentiate(Expression exp) {
         return Expression.sum(e1.differentiate(exp), e2.differentiate(exp));
+    }
+
+    @Override
+    public Expression evaluate(Map<String, Double> environment) {
+        return Expression.sum(e1.evaluate(environment), e2.evaluate(environment));
+    }
+
+    @Override
+    public boolean isNumeric() {
+        return e1.isNumeric() && e2.isNumeric();
     }
 }

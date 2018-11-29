@@ -1,6 +1,8 @@
 package expressivo;
 
 
+import java.util.Map;
+
 public class Multiply implements Expression {
     private final Expression e1;
     private final Expression e2;
@@ -52,5 +54,15 @@ public class Multiply implements Expression {
         Expression leftDiff = Expression.times(e1, e2.differentiate(exp));
         Expression rightDiff = Expression.times(e2, e1.differentiate(exp));
         return Expression.sum(leftDiff, rightDiff);
+    }
+
+    @Override
+    public Expression evaluate(Map<String, Double> environment) {
+        return Expression.times(e1.evaluate(environment), e2.evaluate(environment));
+    }
+
+    @Override
+    public boolean isNumeric() {
+        return e1.isNumeric() && e2.isNumeric();
     }
 }
