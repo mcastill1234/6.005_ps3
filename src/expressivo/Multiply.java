@@ -1,6 +1,5 @@
 package expressivo;
 
-
 import java.util.Map;
 
 public class Multiply implements Expression {
@@ -58,7 +57,11 @@ public class Multiply implements Expression {
 
     @Override
     public Expression evaluate(Map<String, Double> environment) {
-        return Expression.times(e1.evaluate(environment), e2.evaluate(environment));
+        Multiply product = new Multiply(e1.evaluate(environment), e2.evaluate(environment));
+        if (product.isNumeric()) {
+            return new Number(((Number) product.e1).getNumber() * ((Number) product.e2).getNumber());
+        }
+        return product;
     }
 
     @Override

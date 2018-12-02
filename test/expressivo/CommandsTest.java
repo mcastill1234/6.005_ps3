@@ -39,7 +39,7 @@ public class CommandsTest {
         environment.put("y", 10.00);
         // environment.put("z", 20.00);
         String simplified = Commands.simplify(testExp, environment);
-        String expected = "(((x * x) * x) + ((10.0 * 10.0) * 10.0))";
+        String expected = "(((x * x) * x) + 1000.0)";
         assertEquals(expected, simplified);
     }
     

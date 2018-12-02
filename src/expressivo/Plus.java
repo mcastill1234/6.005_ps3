@@ -54,11 +54,16 @@ public class Plus implements Expression {
 
     @Override
     public Expression evaluate(Map<String, Double> environment) {
-        return Expression.sum(e1.evaluate(environment), e2.evaluate(environment));
+        Plus addition = new Plus(e1.evaluate(environment), e2.evaluate(environment));
+        if (addition.isNumeric()) {
+            return new Number (((Number) addition.e1).getNumber() + ((Number) addition.e2).getNumber()) ;
+        }
+        return addition;
     }
 
     @Override
     public boolean isNumeric() {
         return e1.isNumeric() && e2.isNumeric();
     }
+
 }

@@ -35,7 +35,7 @@ public class ExpressionTest {
         double num2 = 5.43001;
         Expression exp1 = Expression.make(num1);
         Expression exp2 = Expression.make(num2);
-        System.out.println(exp1.equals(exp2));
+        // System.out.println(exp1.equals(exp2));
     }
 
     /**
@@ -354,8 +354,8 @@ public class ExpressionTest {
         Expression testSum2 = Expression.sum(var2, var3);
         Expression evalSum1 = testSum1.evaluate(environment);
         Expression evalSum2 = testSum2.evaluate(environment);
-        Expression expectedExp1 = Expression.sum(Expression.make(5.00), Expression.make(10.00));
-        Expression expectedExp2 = Expression.sum(Expression.make(10.00), Expression.make(20.00));
+        Expression expectedExp1 = Expression.make(15.0);
+        Expression expectedExp2 = Expression.make(30.0);
         assertEquals(evalSum1, expectedExp1);
         assertEquals(evalSum2, expectedExp2);
     }
@@ -373,8 +373,8 @@ public class ExpressionTest {
         Expression testMult2 = Expression.times(var2, var3);
         Expression evalMult1 = testMult1.evaluate(environment);
         Expression evalMult2 = testMult2.evaluate(environment);
-        Expression expectedExp1 = Expression.times(Expression.make(5.00), Expression.make(10.00));
-        Expression expectedExp2 = Expression.times(Expression.make(10.00), Expression.make(20.00));
+        Expression expectedExp1 = Expression.make(50);
+        Expression expectedExp2 = Expression.make(200);
         assertEquals(evalMult1, expectedExp1);
         assertEquals(evalMult2, expectedExp2);
     }

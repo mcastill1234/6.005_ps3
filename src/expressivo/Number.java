@@ -22,6 +22,10 @@ public class Number implements Expression {
         checkRep();
     }
 
+    public double getNumber() {
+        return n;
+    }
+
     @Override
     public String toString() {
         return String.valueOf(n);
