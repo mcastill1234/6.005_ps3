@@ -39,7 +39,7 @@ public interface Expression {
      * @return expression AST for the input
      * @throws IllegalArgumentException if the expression is invalid
      */
-    public static Expression parse(String input) {
+    public static Expression parse(String input) throws IllegalArgumentException {
         try {
             CharStream stream = new ANTLRInputStream(input);
             ExpressionLexer lexer = new ExpressionLexer(stream);
@@ -83,8 +83,6 @@ public interface Expression {
      */
     @Override
     public int hashCode();
-    
-    // TODO more instance methods
 
     /**
      * Creates a Number expression with Double format
